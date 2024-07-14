@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -140,6 +143,36 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        try {
+        ProdutosDTO produto = new ProdutosDTO();
+        String nome = cadastroNome.getText().trim();
+        String valorStr = cadastroValor.getText().trim();
+
+        if (nome.isEmpty() || valorStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nome e valor são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int valor = Integer.parseInt(valorStr);
+        String status = "A Venda";
+
+        produto.setNome(nome);
+        produto.setValor(valor);
+        produto.setStatus(status);
+        
+        ProdutosDAO produtodao = new ProdutosDAO();
+        produtodao.cadastrarProduto(produto);
+
+        JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, insira um valor numérico válido.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao cadastrar produto: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+        
+        
+        /* VERSÃO QUE VEIO   
         ProdutosDTO produto = new ProdutosDTO();
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
@@ -149,7 +182,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         produto.setStatus(status);
         
         ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
+        produtodao.cadastrarProduto(produto);*/
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
