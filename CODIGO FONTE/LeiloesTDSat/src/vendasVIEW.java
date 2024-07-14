@@ -1,8 +1,12 @@
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 public class vendasVIEW extends javax.swing.JFrame {
 
     public vendasVIEW() {
         initComponents();
+        listarProdutosVendidos();
     }
 
     /**
@@ -88,10 +92,29 @@ public class vendasVIEW extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listarProdutosVendidos() {
+        ProdutosDAO produtosdao = new ProdutosDAO();
+        DefaultTableModel model = (DefaultTableModel) jTable_vendidos.getModel();
+        model.setNumRows(0);
+
+        ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+
+        for (ProdutosDTO produto : listagem) {
+            model.addRow(new Object[]{
+                produto.getId(),
+                produto.getNome(),
+                produto.getValor(),
+                produto.getStatus()
+            });
+        }
+    }
+
+
     private void btn_voltarListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarListagemActionPerformed
 
         listagemVIEW listagem = new listagemVIEW();
         listagem.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_voltarListagemActionPerformed
 
     /**
