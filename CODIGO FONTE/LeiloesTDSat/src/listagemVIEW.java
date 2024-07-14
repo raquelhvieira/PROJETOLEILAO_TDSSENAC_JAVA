@@ -30,7 +30,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         btnVendas = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,16 +126,25 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+    
+    ProdutosDAO produtosdao = new ProdutosDAO();
+    boolean sucesso = produtosdao.venderProduto(Integer.parseInt(id));
+    
+    if (sucesso) {
+        JOptionPane.showMessageDialog(this, "Venda realizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Produto já foi vendido ou não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    id_produto_venda.setText(""); //limpar caixa
+    
+    listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        vendasVIEW vendas = new vendasVIEW(); 
+        vendas.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

@@ -56,6 +56,44 @@ public class ProdutosDAO {
         return listagem;
     }
 
+    public boolean venderProduto(int idProduto) {
+        String sql = "UPDATE produtos SET status = ? WHERE id = ? AND status = 'A Venda'";
+
+        try ( PreparedStatement prep = conn.prepareStatement(sql)) {
+            prep.setString(1, "Vendido");
+            prep.setInt(2, idProduto);
+
+            int rowsAffected = prep.executeUpdate();
+            return rowsAffected > 0; // Retorna true se a atualização foi bem-sucedida
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retorna false em caso de erro
+        }
+    }
+    
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+    ArrayList<ProdutosDTO> listagem = new ArrayList<>();
+    String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+    
+    try (PreparedStatement prep = conn.prepareStatement(sql);
+         ResultSet rs = prep.executeQuery()) {
+        
+        while (rs.next()) {
+            ProdutosDTO produto = new ProdutosDTO();
+            produto.setId(rs.getInt("id")); 
+            produto.setNome(rs.getString("nome"));
+            produto.setValor(rs.getInt("valor"));
+            produto.setStatus(rs.getString("status"));
+            listagem.add(produto);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); 
+    }
+    
+    return listagem;
+}
+
+
     /* COMO VEIO
     Connection conn;
     PreparedStatement prep;
@@ -71,7 +109,5 @@ public class ProdutosDAO {
         
         return listagem;
     }*/
-    void venderProduto(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 }

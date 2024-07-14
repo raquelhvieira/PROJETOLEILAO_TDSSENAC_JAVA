@@ -1,20 +1,9 @@
 
 import javax.swing.JOptionPane;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Adm
- */
 public class cadastroVIEW extends javax.swing.JFrame {
 
-    /**
-     * Creates new form cadastroVIEW
-     */
     public cadastroVIEW() {
         initComponents();
     }
@@ -39,7 +28,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JButton();
         btnProdutos = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 24)); // NOI18N
         jLabel1.setText("Sistema de Leilões");
@@ -189,6 +178,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
         listagemVIEW listagem = new listagemVIEW(); 
         listagem.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnProdutosActionPerformed
 
     /**
