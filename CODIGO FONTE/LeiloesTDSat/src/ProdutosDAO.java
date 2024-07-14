@@ -56,6 +56,22 @@ public class ProdutosDAO {
         return listagem;
     }
 
+    public boolean venderProduto(int idProduto) {
+        String sql = "UPDATE produtos SET status = ? WHERE id = ? AND status = 'A Venda'";
+
+        try ( PreparedStatement prep = conn.prepareStatement(sql)) {
+            prep.setString(1, "Vendido");
+            prep.setInt(2, idProduto);
+
+            int rowsAffected = prep.executeUpdate();
+            return rowsAffected > 0; // Retorna true se a atualização foi bem-sucedida
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retorna false em caso de erro
+        }
+    }
+
+
     /* COMO VEIO
     Connection conn;
     PreparedStatement prep;
@@ -71,7 +87,7 @@ public class ProdutosDAO {
         
         return listagem;
     }*/
-    void venderProduto(int parseInt) {
+    /*void venderProduto(int parseInt) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    }*/
 }
