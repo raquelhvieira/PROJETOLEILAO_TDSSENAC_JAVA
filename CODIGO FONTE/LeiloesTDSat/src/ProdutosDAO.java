@@ -1,31 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Adm
- */
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.sql.SQLException;
-
+import java.sql.ResultSet;
 
 public class ProdutosDAO {
-    
+
     private Connection conn;
 
     public ProdutosDAO() {
-        this.conn = new conectaDAO().connectDB(); 
+        this.conn = new conectaDAO().connectDB();
     }
 
     public void cadastrarProduto(ProdutosDTO produto) {
         String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
-        
-        try (PreparedStatement prep = conn.prepareStatement(sql)) {
+
+        try ( PreparedStatement prep = conn.prepareStatement(sql)) {
             prep.setString(1, produto.getNome());
             prep.setInt(2, produto.getValor());
             prep.setString(3, produto.getStatus());
@@ -45,9 +36,26 @@ public class ProdutosDAO {
     }
 
     public ArrayList<ProdutosDTO> listarProdutos() {
-        return listagem; 
+        ArrayList<ProdutosDTO> listagem = new ArrayList<>();
+        String sql = "SELECT * FROM produtos";
+
+        try ( PreparedStatement prep = conn.prepareStatement(sql);  ResultSet rs = prep.executeQuery()) {
+
+            while (rs.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getInt("valor"));
+                produto.setStatus(rs.getString("status"));
+                listagem.add(produto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listagem;
     }
-    
+
     /* COMO VEIO
     Connection conn;
     PreparedStatement prep;
@@ -62,7 +70,8 @@ public class ProdutosDAO {
     public ArrayList<ProdutosDTO> listarProdutos(){
         
         return listagem;
-    }*/    
-        
+    }*/
+    void venderProduto(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
-
